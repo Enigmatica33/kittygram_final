@@ -14,7 +14,7 @@ services:
   backend:
     image: enigmatica/kittygram_backend
     volumes:
-      - media:/media
+      - media:/app/media
     env_file: .env
   frontend:
     env_file: .env
@@ -29,4 +29,4 @@ services:
       - 9000:80
     volumes:
       - static:/static
-      - media:/media
+      - media:/app/media
