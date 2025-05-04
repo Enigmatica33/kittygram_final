@@ -3,25 +3,30 @@ version: '3'
 volumes:
   pg_data:
   static:
+  media:
 
 services:
   db:
     image: postgres:13
+    env_file: .env
     volumes:
       - pg_data:/var/lib/postgresql/data
   backend:
-    build: ./backend/
+    image: enigmatica/kittygram_backend
+    volumes:
+      - media:/media
     env_file: .env
   frontend:
     env_file: .env
-    build: ./frontend/
+    image: enigmatica/kittygram_frontend
     command: cp -r /app/build/. /static/
     volumes:
       - static:/static
   gateway:
-    build: ./nginx/
+    image: enigmatica/kittygram_gateway
     env_file: .env
     ports:
       - 9000:80
     volumes:
       - static:/static
+      - media:/media
